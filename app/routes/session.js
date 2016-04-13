@@ -28,6 +28,18 @@ function SessionHandler(db) {
         }
     };
 
+    this.isUserAdminMiddleware = function(req, res, next) {
+        var userId = req.session.userId;
+        userDAO.getUserById(parseInt(userId), function(err, doc) {
+            console.log(doc);
+            if (doc.isAdmin) {
+              next();
+            } else {
+              return res.redirect("/");
+            }
+        });
+    }
+
     this.displayLoginPage = function(req, res, next) {
         return res.render("login", {
             userName: "",

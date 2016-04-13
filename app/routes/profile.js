@@ -1,4 +1,5 @@
 var ProfileDAO = require("../data/profile-dao").ProfileDAO;
+var escape = require("escape-html")
 
 /* The ProfileHandler must be constructed with a connected db */
 function ProfileHandler(db) {
@@ -19,13 +20,13 @@ function ProfileHandler(db) {
 
     this.handleProfileUpdate = function(req, res, next) {
 
-        var firstName = req.body.firstName;
-        var lastName = req.body.lastName;
-        var ssn = req.body.ssn;
-        var dob = req.body.dob;
-        var address = req.body.address;
-        var bankAcc = req.body.bankAcc;
-        var bankRouting = req.body.bankRouting;
+        var firstName = escape(req.body.firstName);
+        var lastName = escape(req.body.lastName);
+        var ssn = escape(req.body.ssn);
+        var dob = escape(req.body.dob);
+        var address = escape(req.body.address);
+        var bankAcc = escape(req.body.bankAcc);
+        var bankRouting = escape(req.body.bankRouting);
 
         var userId = req.session.userId;
 

@@ -9,6 +9,7 @@
     "consolidate": "^0.12.1",
     "csurf": "^1.8.2",
     "dont-sniff-mimetype": "^0.1.0",
+    "escape-html": "^1.0.3",
     "express": "^4.12.3",
     "express-session": "^1.11.2",
     "forever": "^0.14.1",
