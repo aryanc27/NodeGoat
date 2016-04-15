@@ -11,7 +11,20 @@ function ProfileDAO(db) {
     }
 
     var users = db.collection("users");
-
+    
+    // Use crypto module to save sensitive data such as ssn, dob in encrypted format
+    var crypto = require("crypto");
+    var config = require("../../config/config");
+    // Helper function to encrypt data
+    var encrypt = function(toEncrypt) {
+        var ci = crypto.createCipher(config.cryptoAlgo, config.cryptoKey);
+        return ci.update(toEncrypt, "utf8", "hex") + ci.final("hex");
+    };
+    // Helper function to decrypt data
+    var decrypt = function(toDecrypt) {
+        var de = crypto.createDecipher(config.cryptoAlgo, config.cryptoKey);
+        return de.update(toDecrypt, "hex", "utf8") + de.final("utf8");
+    };
 
     /*************** SECURITY ISSUE ****************
      ** Sensitive data should be handled with     **
@@ -67,7 +80,8 @@ function ProfileDAO(db) {
             },
             function(err, user) {
                 if (err) return callback(err, null);
-
+                user.ssn = user.ssn ? decrypt(user.ssn) : "";
+                user.dob = user.dob ? decrypt(user.dob) : "";
                 // Here, we're finding the user with userID and
                 // sending it back to the user, so if you encrypted
                 // fields when you inserted them, you need to decrypt
