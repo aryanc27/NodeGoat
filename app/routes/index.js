@@ -68,7 +68,7 @@ var exports = function(app, db) {
 
     // Handle redirect for learning resources link
     app.get("/learn", isLoggedIn, function(req, res, next) {
-        // Insecure way to handle redirects by taking redirect url from query string
+        // secure way to handle redirects by taking redirect url from query string
         return res.redirect("https://www.khanacademy.org/economics-finance-domain/core-finance/investment-vehicles-tutorial/ira-401ks/v/traditional-iras");
     });
 
