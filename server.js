@@ -12,6 +12,13 @@ var app = express(); // Web framework to handle routing requests
 var routes = require("./app/routes");
 var config = require("./config/config"); // Application config properties
 
+var fs = require("fs");
+var https = require("https");
+var path = require("path");
+var httpsOps = {
+    key: fs.readFileSync(path.resolve(__dirname, "./artifacts/cert/server.key")),
+    cert: fs.readFileSync(path.resolve(__dirname, "./artifacts/cert/server.crt"))
+};
 
 /*************** SECURITY ISSUES ***************
  ** There are several security issues with    **
@@ -91,7 +98,7 @@ MongoClient.connect(config.db, function(err, db) {
     });
 
     // Insecure HTTP connection
-    http.createServer(app).listen(config.port,  function() {
+    https.createServer(httpsOps, app).listen(config.port,  function() {
         console.log("Express http server listening on port " + config.port);
     });
 
