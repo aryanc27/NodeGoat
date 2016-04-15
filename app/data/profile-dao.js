@@ -38,11 +38,11 @@ function ProfileDAO(db) {
             user.bankRouting = bankRouting;
         }
         if (ssn) {
-            user.ssn = ssn; //<- what if your server gets hacked?
-            //encrypt sensitive fields!
+            user.ssn = encrypt(ssn); 
+            //encrypt sensitive fields using encrypt
         }
         if (dob) {
-            user.dob = dob;
+            user.dob = encrypt(dob);
         }
 
         users.update({
