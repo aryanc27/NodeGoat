@@ -30,6 +30,24 @@ var config = require("./config/config"); // Application config properties
  **       do so here, using middleware.       **
  **       Check out the csrf module!          **
  ***********************************************/
+//Session mangement 
+app.use(express.cookieParser());
+
+//Stop cookies from being accessed by scripts
+app.use(express.session({
+    secret: "s3Cur3",
+    cookie: {
+        httpOnly: true,
+        secure: true
+    }
+}));
+
+//destory cookie after session
+req.session.destroy(function() {
+    res.redirect("/");
+});
+
+
 
 MongoClient.connect(config.db, function(err, db) {
     if (err) {
