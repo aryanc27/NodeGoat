@@ -8,12 +8,12 @@ var consolidate = require("consolidate"); // Templating library adapter for Expr
 var swig = require("swig"); //Templating agent (like mustache)
 var MongoClient = require("mongodb").MongoClient; // Driver for connecting to MongoDB
 var http = require("http");
-var connect = require('connect');
-var app2 = connect();
 var app = express(); // Web framework to handle routing requests
 var routes = require("./app/routes");
 var config = require("./config/config"); // Application config properties
 
+var cookieParser = require('cookie-parser')
+var session = require('express-session');
 
 var fs = require("fs");
 var https = require("https");
@@ -41,22 +41,16 @@ var httpsOps = {
  **       Check out the csrf module!          **
  ***********************************************/
 //Session mangement 
-app.use(app2.cookieParser());
+app.use(cookieParser());
 
 //Stop cookies from being accessed by scripts
-app.use(app2.session({
+app.use(session({
     secret: "s3Cur3",
     cookie: {
         httpOnly: true,
         secure: true
     }
 }));
-
-//destory cookie after session
-req.session.destroy(function() {
-    res.redirect("/");
-});
-
 
 
 MongoClient.connect(config.db, function(err, db) {
