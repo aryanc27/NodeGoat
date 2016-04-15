@@ -59,20 +59,20 @@ function SessionHandler(db) {
 
             /*************** SECURITY ISSUE ****************
              ** Why are two different error messages      **
-             ** bad?                                      **
+             ** done                                      **
              ***********************************************/
             if (err) {
                 if (err.noSuchUser) {
                     return res.render("login", {
                         userName: userName,
                         password: "",
-                        loginError: invalidUserNameErrorMessage
+                        loginError: errorMessage
                     });
                 } else if (err.invalidPassword) {
                     return res.render("login", {
                         userName: userName,
                         password: "",
-                        loginError: invalidPasswordErrorMessage
+                        loginError: errorMessage
                     });
                 } else {
                     return next(err);
