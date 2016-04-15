@@ -72,8 +72,8 @@ function UserDAO(db) {
             if (err) return callback(err, null);
 
             if (user) {
-                if (comparePassword(password, user.password)) {
-                    callback(null, user);
+                if (bcrypt.compareSync(password, user.password)) {
+                     callback(null, user);
                 } else {
                     var invalidPasswordError = new Error("Invalid password");
                     // Set an extra field so we can distinguish this from a db error
