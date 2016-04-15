@@ -45,7 +45,7 @@ app.use(cookieParser());
 
 //Stop cookies from being accessed by scripts
 app.use(session({
-    secret: "s3Cur3",
+    secret: "a6uyq9",
     cookie: {
         httpOnly: true,
         secure: true
@@ -95,8 +95,12 @@ MongoClient.connect(config.db, function(err, db) {
     });
 
     // Insecure HTTP connection
-    https.createServer(httpsOps, app).listen(config.port,  function() {
+    http.createServer(app).listen(config.port,  function() {
         console.log("Express http server listening on port " + config.port);
     });
+
+    // https.createServer(httpsOps, app).listen(config.port,  function() {
+    //     console.log("Express http server listening on port " + config.port);
+    // });
 
 });
