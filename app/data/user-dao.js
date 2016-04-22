@@ -21,15 +21,15 @@ function UserDAO(db) {
          ** database using plaintext?                 **
          ** Note: the bcrypt module helps fix this    **
          ***********************************************/
-        var salt = bcrypt.genSaltSync();
-        var pHash = bcrypt.hashSync(password, salt);
+        //var salt = bcrypt.genSaltSync();
+        //var pHash = bcrypt.hashSync(password, salt);
         // Create user document
         var user = {
             userName: userName,
             firstName: firstName,
             lastName: lastName,
             benefitStartDate: this.getRandomFutureDate(),
-            password: pHash //received from request param
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync()) //received from request param
         };
 
         // Add email if set
